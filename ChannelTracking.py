@@ -3,9 +3,6 @@
 
 # In[1]:
 
-pip install --upgrade google-api-python-client
-pip install --upgrade google-auth-oauthlib google-auth-httplib2
-
 from googleapiclient.discovery import build
 import pandas as pd
 from datetime import date
