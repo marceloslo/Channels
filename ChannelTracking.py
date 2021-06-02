@@ -1,78 +1,45 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[31]:
+
 
 from googleapiclient.discovery import build
 import pandas as pd
 from datetime import date
 import numpy as np
-import time
+import json
 
 
-# In[2]:
+# In[32]:
 
 
 api_key = 'AIzaSyB7EHy2ZKpfPTY56yRVuu7a8lChfB-IVjw'
 youtube = build('youtube', 'v3', developerKey=api_key)
 
-
-# In[3]:
-
-
-#obtendo dados dos canais
-try:
-    channels=pd.read_csv('channels.csv')
-except:
-    channels=pd.DataFrame(columns=['id','name'])
-    c1=pd.read_csv("FilteredChannels.csv")
-    c2=pd.read_csv("Fb_groups_covid_IOs - youtube_channels.csv")
-    #Obtendo os ids dos canais
-    ids=[]
-    for index, i in c1.iterrows():
-        try:
-            aux=[]
-            ids.append(i['Channel url'].split('channel/')[1])
-            aux.append(i['Channel url'].split('channel/')[1])
-            aux.append(i['Channel name'])
-            channels.loc[len(channels)]=aux
-        except:
-            pass
-    for index, i in c2.iterrows():
-        try:
-            aux=[]
-            ids.append(i['URL to channel'].split('channel/')[1].split('/')[0])
-            aux.append(i['URL to channel'].split('channel/')[1].split('/')[0])
-            aux.append(i['Youtube Channel Name'])
-            channels.loc[len(channels)]=aux
-        except:
-            pass
-    users=[]
-    for i in c2['URL to channel']:
-        try:
-            users.append(i.split('c/')[1].split('/')[0])
-        except:
-            pass
-        try:
-            users.append(i.split('user/')[1].split('/')[0])
-        except:
-            pass
-    #conseguindo o id dos usuarios
-    for i in users:
-        request=youtube.channels().list(part=['id','snippet'],forUsername=i)
-        query=request.execute()
-        try:
-            aux=[]
-            ids.append(query['items'][0]['id'])
-            aux.append(query['items'][0]['id'])
-            aux.append(query['items'][0]['snippet']['title'])
-            channels.loc[len(channels)]=aux
-        except:
-            print('Failed to find username:',i)
-    channels.to_csv('channels.csv',index=False)
+with open('channels_metadata.json') as json_file:
+        channelsJ=[]
+        for line in json_file:
+            channelsJ.append(json.loads(line))
 
 
-# In[4]:
+# In[35]:
+
+
+ids=[]
+titles=[]
+for i in channelsJ:
+    try:
+        ids.append(i['id'])
+        titles.append(i['title'])
+    except:
+        pass
+channels=pd.DataFrame()
+channels['id']=ids
+channels['name']=titles
+
+
+# In[36]:
 
 
 try:
@@ -85,13 +52,13 @@ except:
     rmChannel=pd.DataFrame(columns=['date','ChannelId','Channel'])
 
 
-# In[7]:
+# In[37]:
 
 
 channels.groupby('id').count()
 
 
-# In[6]:
+# In[38]:
 
 while True:
     day=date.today()
@@ -111,20 +78,18 @@ while True:
             add.append(q['items'][0]['statistics']['videoCount'])
             track.loc[len(track)]=add
         except:
-            channel=channels[channels['id']==i]['name'].iloc[0]
-            add.append(i)
-            add.append(channel)
-            rmChannel.loc[len(rmChannel)]=add
-            channels=channels[channels['id']!=i]
+            if track[track['id']==i].iloc[-1]['views']!=np.nan:
+                add2=[]
+                channel=channels[channels['id']==i]['name'].iloc[0]
+                add.append(i)
+                add.append(channel)
+                add2.append(channel)
+                add2.append(i)
+                add2.append(np.nan)
+                add2.append(np.nan)
+                add2.append(np.nan)
+                rmChannel.loc[len(rmChannel)]=add
+                track.loc[len(track)]=add2
     track.to_csv('channelsTracking.csv',index=False)
     rmChannel.to_csv('removedChannels.csv',index=False)
-    channels.to_csv('channels.csv',index=False)
     time.sleep(86400)
-
-
-
-# In[ ]:
-
-
-
-
