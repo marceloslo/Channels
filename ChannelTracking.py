@@ -62,7 +62,10 @@ channels.groupby('id').count()
 
 while True:
     day=date.today()
+    count=0
     for i in channels['id']:
+        count+=1
+        print('canal ',i,' de ',len(channels))
         req=youtube.channels().list(part=['id','statistics','snippet'],id=i)
         q=req.execute()
         add=[]
