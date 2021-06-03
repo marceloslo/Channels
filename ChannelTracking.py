@@ -85,4 +85,5 @@ while True:
                     track.loc[len(track)]=add2
     track.to_csv('channelsTracking.csv',index=False)
     rmChannel.to_csv('removedChannels.csv',index=False)
+    print('done ',day)
     time.sleep(86400)
