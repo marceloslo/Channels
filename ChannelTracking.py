@@ -74,6 +74,7 @@ while True:
                     channel=channels[channels['id']==i]['name'].iloc[0]
                     add.append(i)
                     add.append(channel)
+                    add2.append(day)
                     add2.append(channel)
                     add2.append(i)
                     add2.append(np.nan)
