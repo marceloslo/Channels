@@ -70,7 +70,7 @@ while True:
                 add.append(q['items'][0]['statistics']['videoCount'])
                 track.loc[len(track)]=add
             except:
-                if track[track['id']==i].iloc[-1]['views']!=np.nan:
+                if not np.isnan(track[track['id']==i].iloc[-1]['views']):
                     add2=[]
                     channel=channels[channels['id']==i]['name'].iloc[0]
                     add.append(i)
