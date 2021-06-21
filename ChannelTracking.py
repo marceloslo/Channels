@@ -22,7 +22,7 @@ youtube = build('youtube', 'v3', developerKey=api_key)
 
 while True:
     
-    with open('/mnt/princeton_data/channels_metadata.json') as json_file:
+    with open('/princeton_data/channels_metadata.json') as json_file:
             channelsJ=[]
             for line in json_file:
                 channelsJ.append(json.loads(line))
@@ -83,7 +83,7 @@ while True:
                     add2.append(np.nan)
                     rmChannel.loc[len(rmChannel)]=add
                     track.loc[len(track)]=add2
-    track.to_csv('/mnt/princeton_data/channelsTracking.csv',index=False)
-    rmChannel.to_csv('/mnt/princeton_data/removedChannels.csv',index=False)
+    track.to_csv('/princeton_data/channelsTracking.csv',index=False)
+    rmChannel.to_csv('/princeton_data/removedChannels.csv',index=False)
     print('done ',day)
     time.sleep(86400)
