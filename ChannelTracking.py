@@ -40,11 +40,11 @@ while True:
     channels['name']=titles
 
     try:
-        track=pd.read_csv('daily_logging_channels.csv')
+        track=pd.read_csv('/princeton_data/source_files/daily_logging_channels.csv')
     except:
         track=pd.DataFrame(columns=['date','title','id','views','subs','videoCount'])
     try:
-        rmChannel=pd.read_csv('removedChannels.csv')
+        rmChannel=pd.read_csv('/princeton_data/source_files/removedChannels.csv')
     except:
         rmChannel=pd.DataFrame(columns=['date','ChannelId','Channel'])
         
