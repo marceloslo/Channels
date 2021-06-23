@@ -22,7 +22,7 @@ youtube = build('youtube', 'v3', developerKey=api_key)
 
 while True:
     
-    with open('/princeton_data/channels_metadata.json') as json_file:
+    with open('/princeton_data/source_files/metadata_channels.json') as json_file:
             channelsJ=[]
             for line in json_file:
                 channelsJ.append(json.loads(line))
@@ -40,7 +40,7 @@ while True:
     channels['name']=titles
 
     try:
-        track=pd.read_csv('channelsTracking.csv')
+        track=pd.read_csv('daily_logging_channels.csv')
     except:
         track=pd.DataFrame(columns=['date','title','id','views','subs','videoCount'])
     try:
@@ -83,7 +83,7 @@ while True:
                     add2.append(np.nan)
                     rmChannel.loc[len(rmChannel)]=add
                     track.loc[len(track)]=add2
-    track.to_csv('/princeton_data/channelsTracking.csv',index=False)
-    rmChannel.to_csv('/princeton_data/removedChannels.csv',index=False)
+    track.to_csv('/princeton_data/source_files/daily_logging_channels.csv',index=False)
+    rmChannel.to_csv('/princeton_data/source_files/removedChannels.csv',index=False)
     print('done ',day)
     time.sleep(86400)
