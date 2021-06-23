@@ -48,7 +48,7 @@ while True:
     except:
         rmChannel=pd.DataFrame(columns=['date','ChannelId','Channel'])
         
-    day=date.today().strftime("%d/%m/%y")
+    day=date.today().strftime('%Y-%m-%d')
     for i in channels['id']:
         checked=False
         for j in track[track['date']==day]['id']:
