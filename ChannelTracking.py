@@ -85,7 +85,18 @@ while True:
                         rmChannel.loc[len(rmChannel)]=add
                         track.loc[len(track)]=add2
                 except:
-                    print(i)
+                        add2=[]
+                        channel=channels[channels['id']==i]['name'].iloc[0]
+                        add.append(i)
+                        add.append(channel)
+                        add2.append(day)
+                        add2.append(channel)
+                        add2.append(i)
+                        add2.append(np.nan)
+                        add2.append(np.nan)
+                        add2.append(np.nan)
+                        rmChannel.loc[len(rmChannel)]=add
+                        track.loc[len(track)]=add2
     track.to_csv('/princeton_data/source_files/daily_logging_channels.csv',index=False)
     rmChannel.to_csv('/princeton_data/source_files/removedChannels.csv',index=False)
     print('done ',day)
