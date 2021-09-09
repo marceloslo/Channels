@@ -68,6 +68,8 @@ while True:
                 except:
                     add.append(-1)
                 add.append(q['items'][0]['statistics']['videoCount'])
+                if q['items'][0]['id'] is in rmChannel['ChannelId'].to_list():
+                    channels.loc[channels['id']==i,'back_online']=True
                 track.loc[len(track)]=add
             except:
                 try:
@@ -95,6 +97,7 @@ while True:
                         add2.append(np.nan)
                         add2.append(np.nan)
                         add2.append(np.nan)
+                        add.append(False)
                         rmChannel.loc[len(rmChannel)]=add
                         track.loc[len(track)]=add2
     track.to_csv('/princeton_data/source_files/daily_logging_channels.csv',index=False)
