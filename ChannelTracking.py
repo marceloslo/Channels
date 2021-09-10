@@ -73,7 +73,7 @@ while True:
                 track.loc[len(track)]=add
             except:
                 try:
-                    if not np.isnan(track[track['id']==i].iloc[-1]['views']):
+                    if all(rmChannel[rmChannel['ChannelId']==i]['back_online'] == True):
                         add2=[]
                         channel=channels[channels['id']==i]['name'].iloc[0]
                         add.append(i)
@@ -84,6 +84,7 @@ while True:
                         add2.append(np.nan)
                         add2.append(np.nan)
                         add2.append(np.nan)
+                        add.append(False)
                         rmChannel.loc[len(rmChannel)]=add
                         track.loc[len(track)]=add2
                 except:
