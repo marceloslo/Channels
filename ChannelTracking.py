@@ -68,7 +68,7 @@ while True:
                 except:
                     add.append(-1)
                 add.append(q['items'][0]['statistics']['videoCount'])
-                if q['items'][0]['id'] is in rmChannel['ChannelId'].to_list():
+                if q['items'][0]['id'] in rmChannel['ChannelId'].to_list():
                     channels.loc[channels['id']==i,'back_online']=True
                 track.loc[len(track)]=add
             except:
